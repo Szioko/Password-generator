@@ -64,34 +64,9 @@ def save():
             website_entry.delete(0, END)
             password_entry.delete(0, END)
 
-
-def save_to_txt():
-    """save data to .txt"""
-
-    website = website_entry.get()
-    email = email_entry.get()
-    password = password_entry.get()
-
-    if len(website) == 0 or len(password) == 0:
-        messagebox.showinfo(title="Oops", message="Please make sure you haven't left any fields empty.")
-    else:
-        is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} "
-                                                              f"\nPassword: {password} \nIs it ok to save?")
-        if is_ok:
+            # Saving data to text file
             with open("data.txt", "a") as data_file:
                 data_file.write(f"{website} | {email} | {password}\n")
-                website_entry.delete(0, END)
-                password_entry.delete(0, END)
-
-
-def sequence(*functions):
-    def func(*args, **kwargs):
-        return_value = None
-        for function in functions:
-            return_value = function(*args, **kwargs)
-        return return_value
-
-    return func
 
 
 # ---------------------------- FIND PASSWORD ------------------------------- #
@@ -149,10 +124,6 @@ search_button.grid(row=1, column=2)
 generate_password_button = Button(text="Generate Password", command=generate_password)
 generate_password_button.grid(row=3, column=2)
 
-add_button = Button(text="Add", width=36, command=sequence(save, save_to_txt))
+add_button = Button(text="Add", width=36, command=save)
 add_button.grid(row=4, column=1, columnspan=2)
 window.mainloop()
-
-# add_button_to_txt = Button(text="Add to txt", width=36, command=save_to_txt,)
-
-# add_button_to_txt.grid(row=5, column=1, columnspan=2)
